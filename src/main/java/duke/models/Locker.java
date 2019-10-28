@@ -61,6 +61,12 @@ public class Locker {
                 + " [" + getTag().tagName + "]";
     }
 
+    public boolean matchLockerNumber(String matchSerialNumber) { return this.serialNumber.getSerialNumberForLocker().contains(matchSerialNumber); }
+
+    public boolean matchLockerAddress(String matchAddress) { return this.address.getAddress().contains(matchAddress); }
+
+    public boolean matchLockerZone(String matchZone) { return this.zone.getZone().contains(matchZone); }
+
     @JsonGetter("tag")
     public Tag getTag() {
         return tag;

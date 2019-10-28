@@ -190,4 +190,15 @@ public class Ui {
         printSpaces(message);
         printDash();
     }
+
+    public void printFoundLockers(List<Locker> foundLockers) {
+        if (foundLockers.size() != 0){
+            printSpaces(" Here are lockers that match your search parameters ");
+            showList(foundLockers);
+        }
+        else {
+            printSpaces(" There are NO lockers that match your search parameters ");
+        }
+
+    }
 }

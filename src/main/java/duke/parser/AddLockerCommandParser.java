@@ -53,5 +53,6 @@ public class AddLockerCommandParser {
 
         return Stream.of(tokens).allMatch(token -> mapTokensToArguments
                 .getValue(token).isPresent());
+        
     }
 }
