@@ -55,7 +55,7 @@ public class Parser {
         case EXPORT_LOCKER_COMMAND:
             return new ExportLockerCommandParser().parse();
         case FIND_COMMAND:
-            return new FindCommandParser().parse();
+            return new FindCommandParser().parse(arguments);
         default:
             throw new DukeException("Invalid Command");
         }

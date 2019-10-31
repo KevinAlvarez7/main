@@ -3,6 +3,7 @@ package duke.models.locker;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import duke.models.FindLocker;
 import duke.models.tag.Tag;
 
 
@@ -120,5 +121,29 @@ public class Locker {
     @Override
     public int hashCode() {
         return Objects.hash(serialNumber, address, zone, tag);
+    }
+
+    /**
+     * This function is used to compare the locker info with a locker that was searched.
+     * This is used in conjunction with Java in-streams.
+     *
+     * @param comparingLocker stores the locker that was searched for.
+     * @return refers to a boolean value to check if the comparison was true or false.
+     */
+
+    public boolean compare(FindLocker comparingLocker) {
+
+        if (comparingLocker.getSerialNumber().equals(this.getSerialNumber())) {
+            return true;
+        }
+        else if (comparingLocker.getAddress().equals(this.getAddress())) {
+            return true;
+        }
+        else if (comparingLocker.getZone().equals(this.getZone())){
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }

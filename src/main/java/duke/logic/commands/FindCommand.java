@@ -1,34 +1,32 @@
 package duke.logic.commands;
 
+import java.util.List;
+import java.util.stream.*;
+
+import duke.models.FindLocker;
 import duke.models.LockerList;
+import duke.models.locker.Address;
 import duke.models.locker.Locker;
+import duke.models.locker.SerialNumber;
+import duke.models.locker.Zone;
 import duke.storage.FileHandling;
 import duke.ui.Ui;
 
 public class FindCommand extends Command {
-    private final Locker findLocker;
+    private final FindLocker findLocker;
 
-    public FindCommand(Locker findLocker) {
+
+    public FindCommand(FindLocker findLocker) {
         this.findLocker = findLocker;
     }
 
     @Override
     public void execute(LockerList lockerList, Ui ui, FileHandling storage){
 
-        LockerList containsMatchedLocker = new LockerList();
-        for (int i = 0; i < lockerList.numLockers(); i++) {
-            if (lockerList.getLocker(i).matchLockerNumber(findLocker.getSerialNumber().getSerialNumberForLocker())) {
-                containsMatchedLocker.addLocker(lockerList.getLocker(i));
-            }
-            else if (lockerList.getLocker(i).matchLockerAddress(findLocker.getAddress().getAddress())) {
-                containsMatchedLocker.addLocker(lockerList.getLocker(i));
-            }
-            else if (lockerList.getLocker(i).matchLockerZone(findLocker.getZone().getZone())) {
-                containsMatchedLocker.addLocker(lockerList.getLocker(i));
-            }
-        }
+        List<Locker> containsMatchedLocker = lockerList.getLockerList().stream().filter(s->s.compare(this.findLocker)).
+                collect(Collectors.toList());
 
-        ui.printFoundLockers(containsMatchedLocker.getAllLockers());
+        ui.printFoundLockers(containsMatchedLocker);
     }
 }
 

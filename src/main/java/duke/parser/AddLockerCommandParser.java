@@ -29,6 +29,7 @@ public class AddLockerCommandParser {
      * @return reference to the class AddLockerCommand
      * @throws DukeException when the command format is invalid
      */
+
     public Command parse(String userInput) throws DukeException {
         MapTokensToArguments mapTokensToArguments =
                 ParserTokenizer.tokenize(userInput, TOKEN_SERIAL, TOKEN_ADDRESS, TOKEN_ZONE);
