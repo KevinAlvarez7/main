@@ -4,11 +4,11 @@ import duke.exceptions.DukeException;
 import duke.logic.commands.AddLockerCommand;
 import duke.logic.commands.Command;
 
-import duke.models.Address;
-import duke.models.Locker;
-import duke.models.SerialNumber;
-import duke.models.Tag;
-import duke.models.Zone;
+import duke.models.locker.Address;
+import duke.models.locker.Locker;
+import duke.models.locker.SerialNumber;
+import duke.models.tag.Tag;
+import duke.models.locker.Zone;
 import duke.parser.utilities.MapTokensToArguments;
 import duke.parser.utilities.ParserTokenizer;
 import duke.parser.utilities.Token;
@@ -35,7 +35,9 @@ public class AddLockerCommandParser {
         if (!checkAllTokensPresent(mapTokensToArguments,
                 TOKEN_SERIAL, TOKEN_ADDRESS, TOKEN_ZONE)
                 || !mapTokensToArguments.getTextBeforeFirstToken().isEmpty()) {
-            throw new DukeException(" Invalid command format");
+            throw new DukeException(" Invalid command format."
+                    + "\n     1.All tokens should be present "
+                    + "\n     2.There should not include any text between the command word and the first token");
         }
 
         SerialNumber serialNumber = ParserCheck.parseSerialNumber(
@@ -43,7 +45,7 @@ public class AddLockerCommandParser {
         Address address = ParserCheck.parseAddress(
                 mapTokensToArguments.getValue(TOKEN_ADDRESS).get());
         Zone zone = ParserCheck.parseZone(mapTokensToArguments.getValue(TOKEN_ZONE).get());
-        Tag tag = new Tag("not-in-use");
+        Tag tag = new Tag(Tag.NOT_IN_USE);
         Locker locker = new Locker(serialNumber, address, zone, tag);
         return new AddLockerCommand(locker);
     }
