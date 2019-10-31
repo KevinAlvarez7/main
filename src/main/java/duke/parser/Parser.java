@@ -4,10 +4,6 @@ import duke.exceptions.DukeException;
 
 import duke.logic.commands.Command;
 
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,9 +16,11 @@ public class Parser {
     private static final String ADD_BATCH_COMMAND = "addbatch";
     private static final String DELETE_LOCKER_COMMAND = "delete";
     private static final String EDIT_LOCKER_COMMAND = "edit";
+    private static final String ASSIGN_LOCKER_COMMAND = "assign";
     private static final String LIST_COMMAND = "list";
     private static final String EXIT_COMMAND = "bye";
-
+    private static final String EXPORT_LOCKER_COMMAND = "export";
+    private static final String FIND_COMMAND = "find";
     /**
      * this function is used to parse the command entered by the user.
      *
@@ -30,6 +28,7 @@ public class Parser {
      * @return objects of type Command depending on the command given by the user
      * @throws DukeException when the user inputs invalid command
      */
+
     public Command parse(String fullCommand) throws DukeException {
         Matcher commandMatch = GENERAL_COMMAND_FORMAT.matcher(fullCommand.trim());
         if (!commandMatch.matches()) {
@@ -43,6 +42,8 @@ public class Parser {
             return new AddLockerCommandParser().parse(arguments);
         case ADD_BATCH_COMMAND:
             return new AddBatchCommandParser().parse(arguments);
+        case ASSIGN_LOCKER_COMMAND:
+            return new AssignLockerCommandParser().parse(arguments);
         case DELETE_LOCKER_COMMAND:
             return new DeleteLockerCommandParser().parse(arguments);
         case EDIT_LOCKER_COMMAND:
@@ -51,6 +52,10 @@ public class Parser {
             return new ListCommandParser().parse();
         case EXIT_COMMAND:
             return new ByeCommandParser().parse();
+        case EXPORT_LOCKER_COMMAND:
+            return new ExportLockerCommandParser().parse();
+        case FIND_COMMAND:
+            return new FindCommandParser().parse();
         default:
             throw new DukeException("Invalid Command");
         }

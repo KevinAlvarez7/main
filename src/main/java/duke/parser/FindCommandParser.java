@@ -1,10 +1,13 @@
 package duke.parser;
 
 import duke.exceptions.DukeException;
-import duke.logic.commands.AddLockerCommand;
 import duke.logic.commands.Command;
 import duke.logic.commands.FindCommand;
-import duke.models.*;
+import duke.models.locker.Address;
+import duke.models.locker.Locker;
+import duke.models.locker.SerialNumber;
+import duke.models.locker.Zone;
+import duke.models.tag.Tag;
 import duke.parser.utilities.MapTokensToArguments;
 import duke.parser.utilities.ParserTokenizer;
 import duke.parser.utilities.Token;
