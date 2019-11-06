@@ -1,10 +1,14 @@
 package duke.parser;
 
 import duke.exceptions.DukeException;
-import duke.logic.commands.AddLockerCommand;
 import duke.logic.commands.Command;
 import duke.logic.commands.FindCommand;
-import duke.models.*;
+import duke.models.FindLocker;
+import duke.models.locker.Address;
+import duke.models.locker.Locker;
+import duke.models.locker.SerialNumber;
+import duke.models.locker.Zone;
+import duke.models.tag.Tag;
 import duke.parser.utilities.MapTokensToArguments;
 import duke.parser.utilities.ParserTokenizer;
 import duke.parser.utilities.Token;
@@ -27,32 +31,34 @@ public class FindCommandParser {
 
         MapTokensToArguments mapTokensToArguments =
                 ParserTokenizer.tokenize(userInput, TOKEN_SERIAL, TOKEN_ADDRESS, TOKEN_ZONE);
-        if (!checkAllTokensPresent(mapTokensToArguments,
+        if (!checkTokenPresent(mapTokensToArguments,
                 TOKEN_SERIAL)
-                || !checkAllTokensPresent(mapTokensToArguments,
+                || !checkTokenPresent(mapTokensToArguments,
                 TOKEN_ADDRESS)
-                || !checkAllTokensPresent(mapTokensToArguments,
+                || !checkTokenPresent(mapTokensToArguments,
                 TOKEN_ZONE)
                 || !mapTokensToArguments.getTextBeforeFirstToken().isEmpty()) {
             throw new DukeException(" Invalid command format");
         }
 
+            SerialNumber serialNumber = ParserCheck.parseSerialNumber(
+                    mapTokensToArguments.getValue(TOKEN_SERIAL).get());
 
-        SerialNumber serialNumber = ParserCheck.parseSerialNumber(
-                mapTokensToArguments.getValue(TOKEN_SERIAL).get());
-        Address address = ParserCheck.parseAddress(
-                mapTokensToArguments.getValue(TOKEN_ADDRESS).get());
-        Zone zone = ParserCheck.parseZone(mapTokensToArguments.getValue(TOKEN_ZONE).get());
-        Tag tag = new Tag("not-in-use");
-        Locker locker = new Locker(serialNumber, address, zone, tag);
-        return new FindCommand(locker);
+            Address address = ParserCheck.parseAddress(
+                    mapTokensToArguments.getValue(TOKEN_ADDRESS).get());
+
+            Zone zone = ParserCheck.parseZone(
+                    mapTokensToArguments.getValue(TOKEN_ZONE).get());
+
+            FindLocker findLocker = new FindLocker(serialNumber, address, zone);
+
+        return new FindCommand(findLocker);
     }
 
-    private static boolean checkAllTokensPresent(MapTokensToArguments mapTokensToArguments,
-                                                 Token... tokens) {
+    private static boolean checkTokenPresent(MapTokensToArguments mapTokensToArguments,
+                                                 Token tokens) {
 
-        return Stream.of(tokens).allMatch(token -> mapTokensToArguments
-                .getValue(token).isPresent());
+        return mapTokensToArguments.getValue(tokens).isPresent();
 
     }
 
