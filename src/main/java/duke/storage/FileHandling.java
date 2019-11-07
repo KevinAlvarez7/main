@@ -2,6 +2,7 @@ package duke.storage;
 
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import duke.exceptions.DukeException;
 import duke.models.LockerList;
 
@@ -29,14 +30,14 @@ public class FileHandling {
         try {
             FileInputStream readFile = new FileInputStream(this.file);
             LockerList lockers = getObjectMapper().readValue(readFile, LockerList.class);
+            readFile.close();
             return lockers;
 
         } catch (FileNotFoundException e) {
             throw new DukeException(" Could not find the file. Invalid file name/file path... "
                     + "Will continue with an empty list");
         } catch (IOException e) {
-            throw new DukeException(" Error while reading data from the file. "
-                    + "Will continue with an empty list");
+            throw new DukeException(" Unable to read file. Will start with an empty list");
         }
     }
 
@@ -54,13 +55,12 @@ public class FileHandling {
             write.close();
 
         } catch (IOException e) {
-            e.printStackTrace();
             throw new DukeException(" Error occurred while writing data to the file");
         }
     }
 
     private ObjectMapper getObjectMapper() {
-        return new ObjectMapper()
+        return new ObjectMapper().registerModule(new Jdk8Module())
                 .enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL)
                 .disable(MapperFeature.AUTO_DETECT_CREATORS,
                         MapperFeature.AUTO_DETECT_FIELDS,

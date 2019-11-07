@@ -1,5 +1,8 @@
 package duke.models.student;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import duke.exceptions.DukeException;
 
 import static java.util.Objects.requireNonNull;
@@ -10,14 +13,15 @@ public class Name {
             + " and should not be blank.";
 
     public static final String CHECK_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
-    public final String name;
+    public String name;
 
     /**
      * This constructor instantiates the name of the student.
      * @param name stores the name of the student
      * @throws DukeException when the name is in invalid format
      */
-    public Name(String name) throws DukeException {
+    @JsonCreator
+    public Name(@JsonProperty("name") String name) throws DukeException {
         requireNonNull(name);
         if (!checkIsValidName(name)) {
             throw new DukeException(ERROR_MESSAGE);
@@ -29,13 +33,14 @@ public class Name {
         return name.matches(CHECK_REGEX);
     }
 
-    public String getStudentName() {
+    @JsonGetter("name")
+    public String getName() {
         return name;
     }
 
     /* We need to override functions equals and hashCode in order to account for
-       user defined checks for equality while using streams.
-     */
+           user defined checks for equality while using streams.
+         */
     @Override
     public boolean equals(Object other) {
         return other == this //checks whether the two objects are the same and short circuit

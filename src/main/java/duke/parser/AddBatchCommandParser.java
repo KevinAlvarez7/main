@@ -38,7 +38,9 @@ public class AddBatchCommandParser {
         if (!checkAllTokensPresent(mapTokensToArguments,
                 TOKEN_SIZE, TOKEN_SERIAL, TOKEN_ADDRESS, TOKEN_ZONE)
                 || !mapTokensToArguments.getTextBeforeFirstToken().isEmpty()) {
-            throw new DukeException(" Invalid command format");
+            throw new DukeException(" Invalid command format."
+                    + "\n     1.All tokens should be present "
+                    + "\n     2.There should not include any text between the command word and the first token");
         }
 
         SerialNumber serialNumber = ParserCheck.parseSerialNumber(
@@ -66,7 +68,7 @@ public class AddBatchCommandParser {
         requireNonNull(addBatchOfLockers);
         for (int i = 1; i <= size; i++) {
             addBatchOfLockers.add(
-                    new Locker(serialNumber,address,zone,new Tag("not-in-use")));
+                    new Locker(serialNumber,address,zone,new Tag(Tag.NOT_IN_USE),null));
             int serial = Integer.parseInt(serialNumber.getSerialNumberForLocker()) + 1;
             serialNumber = ParserCheck.parseSerialNumber(Integer.toString(serial));
         }

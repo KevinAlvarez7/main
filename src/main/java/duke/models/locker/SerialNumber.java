@@ -14,7 +14,7 @@ public class SerialNumber {
 
     public static final String CHECK_REGEX = "[0-9]+";
 
-    public final String serialNumberForLocker;
+    public String serialNumberForLocker;
 
     /**
      * This constructor is used to instantiate the class with the serial number passed to it.
@@ -30,6 +30,10 @@ public class SerialNumber {
         this.serialNumberForLocker = serialNumber;
     }
 
+    public SerialNumber() {
+
+    }
+
     public static boolean checkIsValidSerialNumber(String serialNumberForLocker) {
         return serialNumberForLocker.matches(CHECK_REGEX)
                 && serialNumberForLocker.length() <= 6;
@@ -40,6 +44,11 @@ public class SerialNumber {
         return serialNumberForLocker;
     }
 
+    /*@JsonSetter("serialNumber")
+    public void setSerialNumberForLocker(String serialNumberForLocker) {
+        this.serialNumberForLocker = serialNumberForLocker;
+    }*/
+
     /* We need to override functions equals() and hashCode() in order to account for
        used defined checking for equality while using streams
      */
@@ -47,8 +56,9 @@ public class SerialNumber {
     public boolean equals(Object other) {
         return other == this //short circuit if the two objects are the same
                 || (other instanceof SerialNumber //handles all cases for null
-                && serialNumberForLocker.equals(((SerialNumber) other)
-                .serialNumberForLocker)); //checks for equality
+                && serialNumberForLocker.replaceFirst("^0+(?!$)", "")
+                .equals(((SerialNumber) other).serialNumberForLocker
+                        .replaceFirst("^0+(?!$)", ""))); //checks for equality while ignoring leading zeroes
     }
 
     @Override

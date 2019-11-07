@@ -1,14 +1,18 @@
 package duke.models.student;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Objects;
 
 import static java.util.Objects.requireNonNull;
 
 public class Student {
-    private final Name name;
-    private final MatricNumber matricNumber;
-    private final Email email;
-    private final Major major;
+    private Name name;
+    private MatricNumber matricNumber;
+    private Email email;
+    private Major major;
 
     /**
      * This constructor instantiates the student and all its properties.
@@ -17,7 +21,11 @@ public class Student {
      * @param email stores the email id of the student
      * @param major stores the major/course of the student
      */
-    public Student(Name name, MatricNumber matricNumber, Email email, Major major) {
+    @JsonCreator
+    public Student(@JsonProperty("studentName") Name name,
+                   @JsonProperty("studentId") MatricNumber matricNumber,
+                   @JsonProperty("studentEmail") Email email,
+                   @JsonProperty("studentMajor") Major major) {
         requireNonNull(name);
         requireNonNull(matricNumber);
         requireNonNull(email);
@@ -28,21 +36,26 @@ public class Student {
         this.major = major;
     }
 
+    @JsonGetter("studentName")
     public Name getName() {
         return name;
     }
 
+    @JsonGetter("studentId")
     public MatricNumber getMatricNumber() {
         return matricNumber;
     }
 
+    @JsonGetter("studentEmail")
     public Email getEmail() {
         return email;
     }
 
+    @JsonGetter("studentMajor")
     public Major getMajor() {
         return major;
     }
+
 
     /* We need to override function equals() and hashCode() in order to account
       for user defined checks for equality while using streams

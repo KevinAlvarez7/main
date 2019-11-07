@@ -13,7 +13,7 @@ public class Zone {
            + "and cannot be empty";
 
     public static final String CHECK_REGEX = "^[a-zA-Z]*$";
-    public final String zone;
+    public String zone;
 
     /**
      * This constructor is used to instantiate the class with the zone value passed to it.
@@ -22,7 +22,7 @@ public class Zone {
      */
 
     @JsonCreator
-    public Zone(@JsonProperty("lockerZone") String zone) throws DukeException {
+    public Zone(@JsonProperty("Zone") String zone) throws DukeException {
         requireNonNull(zone);
         if (!checkIsValidZone(zone)) {
             throw new DukeException(ERROR_MESSAGE);
@@ -34,7 +34,7 @@ public class Zone {
         return zone.matches(CHECK_REGEX) && zone.length() == 1;
     }
 
-    @JsonGetter("lockerZone")
+    @JsonGetter("Zone")
     public String getZone() {
         return zone;
     }

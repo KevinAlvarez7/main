@@ -1,5 +1,8 @@
 package duke.models.student;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import duke.exceptions.DukeException;
 
 import static java.util.Objects.requireNonNull;
@@ -7,27 +10,34 @@ import static java.util.Objects.requireNonNull;
 public class MatricNumber {
 
     public static final String ERROR_MESSAGE = " Matriculation number should contain only "
-            + "alpha numeric characters and should have only 9 characters. It should satisfy"
-            + "the following constraints:"
-            + "\n 1. It should start with the character 'A'"
-            + "\n 2. It should end with a letter"
-            + "\n 3. It should contain only digits between the first and the last character";
+            + "alpha numeric characters and should have only 9 characters. "
+            + "\n\n     It should satisfy the following constraints:"
+            + "\n      1. It should start with the character 'A'"
+            + "\n      2. It should end with a letter"
+            + "\n      3. It should contain only digits between the first and the last character";
 
     public static final String CHECK_REGEX = "[Aa]\\d{7}[a-zA-Z]";
 
-    public final String matricId;
+    public String matricId;
 
     /**
      * This constructor instantiates the student ID / the matric number of the student.
      * @param matricId stores the matric number of the student
      * @throws DukeException when the matric number is in invalid format
      */
-    public MatricNumber(String matricId) throws DukeException {
+    @JsonCreator
+    public MatricNumber(@JsonProperty("id") String matricId) throws DukeException {
         requireNonNull(matricId);
         if (!checkIsValidMatricNumber(matricId)) {
             throw new DukeException(ERROR_MESSAGE);
         }
         this.matricId = matricId;
+    }
+
+
+    @JsonGetter("id")
+    public String getMatricId() {
+        return matricId;
     }
 
     public static boolean checkIsValidMatricNumber(String matricId) {

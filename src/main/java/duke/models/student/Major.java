@@ -1,5 +1,8 @@
 package duke.models.student;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import duke.exceptions.DukeException;
 
 import static java.util.Objects.requireNonNull;
@@ -11,19 +14,26 @@ public class Major {
 
     public static final String CHECK_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
 
-    public final String course;
+    public String course;
 
     /**
      * This constructor instantiates the course/major of the student.
      * @param course stores the course that the student is currently pursuing
      * @throws DukeException when the course is in invalid format
      */
-    public Major(String course) throws DukeException {
+    @JsonCreator
+    public Major(@JsonProperty("major") String course) throws DukeException {
         requireNonNull(course);
         if (!checkIsValidCourse(course)) {
             throw new DukeException(ERROR_MESSAGE);
         }
         this.course = course;
+    }
+
+
+    @JsonGetter("major")
+    public String getCourse() {
+        return course;
     }
 
     public static boolean checkIsValidCourse(String course) {

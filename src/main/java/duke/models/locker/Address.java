@@ -2,6 +2,7 @@ package duke.models.locker;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import duke.exceptions.DukeException;
 
@@ -12,7 +13,7 @@ public class Address {
             + "but it should not be empty";
 
     public static final String CHECK_REGEX = "[^\\s].*";
-    public final String address;
+    public String address;
 
     /**
      * This constructor initializes the object with the address value passed to it.
@@ -20,7 +21,7 @@ public class Address {
      * @throws DukeException when the address is in a invalid format
      */
     @JsonCreator
-    public Address(@JsonProperty("lockerAddress") String address) throws DukeException {
+    public Address(@JsonProperty("address") String address) throws DukeException {
         requireNonNull(address);
         if (!checkIsValidAddress(address)) {
             throw new DukeException(ERROR_MESSAGE);
@@ -32,7 +33,7 @@ public class Address {
         return address.matches(CHECK_REGEX);
     }
 
-    @JsonGetter("lockerAddress")
+    @JsonGetter("address")
     public String getAddress() {
         return address;
     }
