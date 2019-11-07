@@ -127,19 +127,19 @@ public class Locker {
      * This function is used to compare the locker info with a locker that was searched.
      * This is used in conjunction with Java in-streams.
      *
-     * @param comparingLocker stores the locker that was searched for.
+     * @param serialNumber, address, zone are the attributes the locker that was searched for.
      * @return refers to a boolean value to check if the comparison was true or false.
      */
 
-    public boolean compare(FindLocker comparingLocker) {
+    public boolean compare(SerialNumber serialNumber, Address address, Zone zone) {
 
-        if (comparingLocker.getSerialNumber().equals(this.getSerialNumber())) {
+        if (serialNumber.equals(this.getSerialNumber())) {
             return true;
         }
-        else if (comparingLocker.getAddress().equals(this.getAddress())) {
+        else if (address.equals(this.getAddress())) {
             return true;
         }
-        else if (comparingLocker.getZone().equals(this.getZone())){
+        else if (zone.equals(this.getZone())){
             return true;
         }
         else {

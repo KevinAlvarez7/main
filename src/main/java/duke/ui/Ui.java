@@ -231,4 +231,11 @@ public class Ui {
         }
 
     }
+
+    public void printSortedLockers(List<Locker> sortedLockers) {
+
+            printSpaces(" Your lockers have been sorted accordingly ");
+            showList(sortedLockers);
+
+    }
 }

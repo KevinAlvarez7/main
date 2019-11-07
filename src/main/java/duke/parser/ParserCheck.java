@@ -173,4 +173,5 @@ public class ParserCheck {
         }
         return getPreferences;
     }
+
 }

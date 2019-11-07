@@ -21,6 +21,7 @@ public class Parser {
     private static final String EXIT_COMMAND = "bye";
     private static final String EXPORT_LOCKER_COMMAND = "export";
     private static final String FIND_COMMAND = "find";
+    private static final String SORT_COMMAND = "sortby";
     /**
      * this function is used to parse the command entered by the user.
      *
@@ -56,6 +57,8 @@ public class Parser {
             return new ExportLockerCommandParser().parse();
         case FIND_COMMAND:
             return new FindCommandParser().parse(arguments);
+        case SORT_COMMAND:
+            return new SortCommandParser().parse(arguments);
         default:
             throw new DukeException("Invalid Command");
         }

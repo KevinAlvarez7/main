@@ -19,4 +19,8 @@ public class Syntax {
     public static final Token TOKEN_END_DATE = new Token("f/");
     public static final Token TOKEN_PREFERENCES = new Token("p/");
 
+    //Used for command:sortBy
+    public static final Token TOKEN_ASCENDING = new Token("asc/");
+    public static final Token TOKEN_DESCENDING = new Token("des/");
+
 }
