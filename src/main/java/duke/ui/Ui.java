@@ -275,11 +275,34 @@ public class Ui {
     }
 
     /**
+     * This function prints the syntax for find command.
+     */
+    public void showFindSyntax() {
+        printSpaces("To find/search a locker:");
+        printSpaces("  find s/__ OR find a/__ OR find z/__ OR find c/__ OR find "
+                + "OR find n/__ etc.");
+        System.out.println();
+    }
+
+    /**
+     * This function prints the syntax for find command.
+     */
+    public void showSortSyntax() {
+        printSpaces("To sort the lockers:");
+        printSpaces("  sortby asc/ for ascending OR sortby des/ for descending ");
+        printSpaces("  sortby serialNumber OR address OR zone OR tags");
+        System.out.println();
+    }
+
+    /**
      * This function prints the syntax for list and bye command.
      */
     public void showOtherSyntax() {
         printSpaces("To show the list of lockers:");
         printSpaces("  list");
+        System.out.println();
+        printSpaces("To show your Reminders:");
+        printSpaces("  reminders");
         System.out.println();
         printSpaces("To exit SpongeBob:");
         printSpaces("  bye");
@@ -325,6 +348,8 @@ public class Ui {
         showDeleteSyntax();
         showEditSyntax();
         showAssignSyntax();
+        showFindSyntax();
+        showSortSyntax();
         showOtherSyntax();
         showSyntaxLegends();
         showSyntaxNote();
@@ -495,6 +520,50 @@ public class Ui {
 
         printSpaces(" Your lockers have been sorted accordingly ");
         showList(sortedLockers);
+
+    }
+
+    /**
+     * This function shows a table of all sorted lockers based on the user input.
+     * @param unauthorizedLockers stores the list of unauthorized lockers.
+     * @param brokenLockers stores the list of unauthorized lockers.
+     */
+
+    public void printReminders(List<Locker> expiringLockers,
+                               List<Locker> unauthorizedLockers,
+                               List<Locker> brokenLockers) {
+
+        if (expiringLockers.size() != 0) {
+
+            printSpaces(" Here are the list of expiring lockers that require attention. ");
+            showList(expiringLockers);
+
+        } else {
+
+            printSpaces(" There are NO expiring lockers at the moment. ");
+
+        }
+        if (unauthorizedLockers.size() != 0) {
+
+            printSpaces(" Here are the list of unauthorized lockers that require attention. ");
+            showList(unauthorizedLockers);
+
+        } else {
+
+            printSpaces(" There are NO unauthorized usage at the moment. ");
+
+        }
+
+        if (unauthorizedLockers.size() != 0) {
+
+            printSpaces(" Hare are the list of broken lockers that require repairing. ");
+            showList(brokenLockers);
+
+        } else {
+
+            printSpaces(" There are NO broken lockers at the moment. ");
+
+        }
 
     }
 }

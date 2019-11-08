@@ -2,6 +2,7 @@ package duke.parser;
 
 import duke.exceptions.DukeException;
 import duke.logic.commands.Command;
+import duke.logic.commands.RemindersCommand;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -23,6 +24,7 @@ public class Parser {
     private static final String EXPORT_LOCKER_COMMAND = "export";
     private static final String FIND_COMMAND = "find";
     private static final String SORT_COMMAND = "sortby";
+    private static final String REMINDERS_COMMAND = "reminders";
     private static final String HELP_COMMAND = "help";
     /**
      * this function is used to parse the command entered by the user.
@@ -67,6 +69,8 @@ public class Parser {
             return new FindCommandParser().parse(arguments);
         case SORT_COMMAND:
             return new SortCommandParser().parse(arguments);
+        case REMINDERS_COMMAND:
+            return new RemindersCommandParser().parse();
         default:
             throw new DukeException("Invalid Command.");
         }

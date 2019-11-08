@@ -62,12 +62,11 @@ public class SortCommandParser {
 
             return new SortCommand("tags", checkAscOrDes);
 
-        } else if (sortByInput.equalsIgnoreCase("names")) {
-
-            return new SortCommand("names", checkAscOrDes);
-
         } else {
-            throw new DukeException(" Invalid command format");
+            throw new DukeException(" Invalid naming convention. \n"
+                    + " \t Inputs allowed: \n" + " \t - serialNumber\n" + " \t - address\n"
+                    + " \t - zone \n"
+                    + " \t - tags \n");
         }
     }
 
