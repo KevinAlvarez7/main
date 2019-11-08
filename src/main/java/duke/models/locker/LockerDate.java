@@ -1,12 +1,14 @@
 package duke.models.locker;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import duke.exceptions.DukeException;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 import java.time.temporal.ChronoUnit;
 
 import static java.util.Objects.requireNonNull;
@@ -17,8 +19,14 @@ public class LockerDate {
             + "\n\n      1. Should be a valid date as per the Gregorian Calendar."
             + "\n      2. Should be in the format of <DD-MM-YYYY>";
 
+    public static final String ERROR_IN_DATE_DIFFERENCE = " The rental period "
+            + " should satisfy the following constraints:\n"
+            + "\n     1. The end date should be after the start date."
+            + "\n     2. The rental period should be between 7 to 365 days (inclusive)."
+            + "\n     3. The rental ending date cannot be before the current date.";
+
     private static final DateTimeFormatter checkDateFormat =
-            DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            DateTimeFormatter.ofPattern("dd-MM-uuuu").withResolverStyle(ResolverStyle.STRICT);
 
     public String date;
 
@@ -27,16 +35,13 @@ public class LockerDate {
      * @param date stores the date that is to be assigned to the member field
      * @throws DukeException when the date is in invalid format
      */
-    public LockerDate(String date) throws DukeException {
+    @JsonCreator
+    public LockerDate(@JsonProperty("date") String date) throws DukeException {
         requireNonNull(date);
         if (!checkIsValidDate(date)) {
             throw new DukeException(ERROR_MESSAGE);
         }
         this.date = date;
-    }
-
-    public LockerDate() {
-
     }
 
     /**
@@ -58,11 +63,6 @@ public class LockerDate {
         return date;
     }
 
-    @JsonSetter("date")
-    public void setDate() {
-        this.date = date;
-    }
-
     /**
      * This function is used to check if the there is a difference of at least 7 days
      * between the two dates.
@@ -70,14 +70,30 @@ public class LockerDate {
      * @param endDate the end date of locker subscription
      * @return true if the difference is valid, false otherwise
      */
-    public static boolean isDifferenceBetweenDatesValid(String startDate,String endDate) {
-        LocalDate localStartDate = LocalDate.parse(startDate,checkDateFormat);
-        LocalDate localEndDate = LocalDate.parse(endDate,checkDateFormat);
+    public static boolean isDifferenceBetweenDatesValid(String startDate, String endDate) {
+        LocalDate localStartDate = LocalDate.parse(startDate, checkDateFormat);
+        LocalDate localEndDate = LocalDate.parse(endDate, checkDateFormat);
         long daysBetween = localStartDate.until(localEndDate, ChronoUnit.DAYS);
         if (daysBetween <= 6 || daysBetween > 365) {
             return false;
         }
         return true;
+    }
+
+    /**
+     * checks whether the ending date for locker subscription is before the current date.
+     * @param endDate the rental ending date
+     * @param currentDate the current date
+     * @return true if the ending date is before the current date, false otherwise
+     */
+    public static boolean isEndDateBeforeCurrentDate(String endDate, String currentDate) {
+        LocalDate localEndDate = LocalDate.parse(endDate, checkDateFormat);
+        LocalDate localCurrentDate = LocalDate.parse(currentDate, checkDateFormat);
+        long daysBetween = localEndDate.until(localCurrentDate, ChronoUnit.DAYS);
+        if (daysBetween > 0) {
+            return true;
+        }
+        return false;
     }
 
     /* We need to override function equals and hashCode() in order

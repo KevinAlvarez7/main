@@ -1,15 +1,15 @@
 package duke.models.locker;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
-
-import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import duke.exceptions.DukeException;
 
 import static java.util.Objects.requireNonNull;
 
 public class Zone {
 
-    public static final String ERROR_MESSAGE = " Zone should have only 1 alphanumeric character "
+    public static final String ERROR_MESSAGE = " Zone should consist of only 1 letter "
            + "and cannot be empty";
 
     public static final String CHECK_REGEX = "^[a-zA-Z]*$";
@@ -21,16 +21,13 @@ public class Zone {
      * @throws DukeException when zone is in invalid format
      */
 
-    public Zone(String zone) throws DukeException {
+    @JsonCreator
+    public Zone(@JsonProperty("Zone") String zone) throws DukeException {
         requireNonNull(zone);
         if (!checkIsValidZone(zone)) {
             throw new DukeException(ERROR_MESSAGE);
         }
         this.zone = zone;
-    }
-
-    public Zone() {
-
     }
 
     public static boolean checkIsValidZone(String zone) {
@@ -40,11 +37,6 @@ public class Zone {
     @JsonGetter("Zone")
     public String getZone() {
         return zone;
-    }
-
-    @JsonSetter("Zone")
-    public void setZone(String zone) {
-        this.zone = zone;
     }
 
     /* We need to override functions equals() and hashCode() in order to account for

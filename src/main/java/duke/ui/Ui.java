@@ -12,6 +12,7 @@ public class Ui {
         return sc.nextLine();
     }
 
+
     /**
      * This function responsible for printing a line.
      */
@@ -60,25 +61,22 @@ public class Ui {
     }
 
     /**
-     * This function tells the user that Duke has added the task to the list.
-     * @param listOfTasks used for printing the number of tasks in the list.
-     * @param taskA stores the task that is to be added to the list.
+     * This function is used to indicate the user that the usage has been deleted.
      */
-    public void printAddTask(List<Locker> listOfTasks, String taskA) {
-        printSpaces(" Got it. I have added this task:");
-        printSpaces("  " + taskA);
-        showNumTasks(listOfTasks);
+    public void showDeleteUsage() {
+        printSpaces(" I have successfully deleted the usage of the locker.");
+        printDash();
     }
 
     /**
      * This function tells the user that SpongeBob has added the locker into the list.
-     * @param listOfLockers used for printing the number of lockers in the list
+     * @param size used for printing the number of lockers in the list
      * @param lockerA stores the locker that is added to the list
      */
-    public void printAddLocker(List<Locker> listOfLockers, String lockerA) {
+    public void printAddLocker(int size, String lockerA) {
         printSpaces(" Got it. I have added this locker: ");
         printSpaces(" " + lockerA);
-        printSpaces(" Now, Spongebob is managing " + listOfLockers.size() + " lockers");
+        printSpaces(" Now, Spongebob is managing " + size + " lockers");
         printDash();
     }
 
@@ -142,18 +140,10 @@ public class Ui {
 
     }
 
-    private void showNumTasks(List<Locker> listOfTasks) {
-        printSpaces(" Now you have " + listOfTasks.size()
-                + ((listOfTasks.size() == 1) ? " locker in the list." : " lockers in "
+    private void showNumTasks(int size) {
+        printSpaces(" Now you have " + size
+                + ((size == 1) ? " locker in the list." : " lockers in "
                 + "the list"));
-        printDash();
-    }
-
-    private void showList(List<Locker> listOfTasks) {
-        System.out.println();
-        for (int i = 0; i < listOfTasks.size(); i++) {
-            printSpaces(" " + listOfTasks.get(i).toString());
-        }
         printDash();
     }
 
@@ -186,13 +176,13 @@ public class Ui {
 
     /**
      * This function tells the user that SpongeBob has deleted the lockers from the list.
-     * @param lockerList used for showing the number of lockers left in the list.
+     * @param numLockers used for showing the number of lockers left in the list.
      * @param lockerA stores the locker that is deleted.
      */
-    public void deleteMessage(List<Locker> lockerList, String lockerA) {
+    public void deleteMessage(int numLockers, String lockerA) {
         printSpaces(" Noted. I have removed this locker:");
         printSpaces("  " + lockerA);
-        showNumTasks(lockerList);
+        showNumTasks(numLockers);
     }
 
     /**
@@ -339,5 +329,172 @@ public class Ui {
         showSyntaxLegends();
         showSyntaxNote();
         printDash();
+    }
+
+    /**
+     * This function prints required number of empty spaces.
+     * @param num represents the number of wanted empty space.
+     */
+    public void printEmptySpace(int num) {
+        for (int i = 0; i < num; i++) {
+            System.out.print(" ");
+        }
+    }
+
+    /**
+     * This function prints the borders for table of lockers.
+     */
+    public void printListBorder() {
+        String str = "";
+        for (int i = 0; i < 75; i++) {
+            if (i == 0 || i == 14 || i == 28 || i == 33 || i == 74) {
+                str += "+";
+            } else {
+                str += "-";
+            }
+        }
+        printSpaces(str);
+    }
+
+    /**
+     * This function prints the headers for table of lockers.
+     */
+    public void printListHeader() {
+        System.out.print("|");
+        System.out.print("SERIAL NUMBER");
+        System.out.print("|");
+        printEmptySpace(5);
+        System.out.print("TAG");
+        printEmptySpace(5);
+        System.out.print("|");
+        System.out.print("ZONE");
+        System.out.print("|");
+        printEmptySpace(18);
+        System.out.print("AREA");
+        printEmptySpace(18);
+        System.out.print("|");
+    }
+
+    /**
+     * This function prints the serial number of a locker for table of lockers.
+     * @param str stores the serial number of a locker.
+     */
+    public void printListSerialNumber(String str) {
+        System.out.print("|");
+        int trailingSpaces = (13 - str.length()) / 2;
+        int endingSpaces = 13 - trailingSpaces - str.length();
+        printEmptySpace(trailingSpaces);
+        System.out.print(str);
+        printEmptySpace(endingSpaces);
+
+    }
+
+    /**
+     * This function prints the tag of a locker for table of lockers.
+     * @param str stores the tag of a locker.
+     */
+    public void printListTag(String str) {
+        System.out.print("|");
+        if (str.equalsIgnoreCase("not-in-use")) {
+            printEmptySpace(2);
+            System.out.print(str);
+            printEmptySpace(1);
+        } else if (str.equalsIgnoreCase("in-use")) {
+            printEmptySpace(4);
+            System.out.print(str);
+            printEmptySpace(3);
+        } else if (str.equalsIgnoreCase("unauthorized")) {
+            printEmptySpace(1);
+            System.out.print(str);
+        } else {
+            printEmptySpace(4);
+            System.out.print(str);
+            printEmptySpace(3);
+        }
+    }
+
+    /**
+     * This function prints the located zone of a locker for table of lockers.
+     * @param str stores the located zone of a locker.
+     */
+    public void printListZone(String str) {
+        System.out.print("|");
+        printEmptySpace(1);
+        System.out.print(str);
+        printEmptySpace(2);
+    }
+
+    /**
+     * This function prints the located area of a locker for table of lockers.
+     * @param str stores the located area of a locker.
+     */
+    public void printListArea(String str) {
+        System.out.print("|");
+        if (str.length() < 38) {
+            int numberOfSpaces = 40 - str.length();
+            if (numberOfSpaces % 2 == 0) {
+                printEmptySpace(numberOfSpaces / 2);
+                System.out.print(str);
+                printEmptySpace(numberOfSpaces / 2);
+            } else {
+                printEmptySpace((int) Math.floor(numberOfSpaces / 2));
+                System.out.print(str);
+                printEmptySpace((int) Math.ceil(numberOfSpaces / 2) + 1);
+            }
+        } else {
+            System.out.print(str.substring(0, 37));
+            System.out.print("...");
+        }
+        System.out.print("|");
+    }
+
+    /**
+     * This function shows a table of all lockers stored in the system.
+     * @param  listOfLockers stores the list of lockers
+     */
+    public void showList(List<Locker> listOfLockers) {
+
+        printListBorder();
+        System.out.print("    ");
+        printListHeader();
+        System.out.println();
+        printListBorder();
+        for (int i = 0; i < listOfLockers.size(); i++) {
+            System.out.print("    ");
+            printListSerialNumber(listOfLockers.get(i).serialNumberToString());
+            printListTag(listOfLockers.get(i).tagToString());
+            printListZone(listOfLockers.get(i).zoneToString());
+            printListArea(listOfLockers.get(i).areaToString());
+            System.out.println();
+        }
+        printListBorder();
+        printDash();
+    }
+
+    /**
+     * This function shows a table of all lockers that was searched by the user.
+     * @param foundLockers stores the list of lockers that match the search parameters.
+     */
+
+    public void printFoundLockers(List<Locker> foundLockers) {
+        if (foundLockers.size() != 0) {
+            printSpaces(" Here are lockers that match your search parameters ");
+            showList(foundLockers);
+        } else {
+            printSpaces(" There are NO lockers that match your search parameters ");
+        }
+
+    }
+
+    /**
+     * This function shows a table of all sorted lockers based on the user input.
+     * @param sortedLockers stores the list of lockers that were sorted based on the user input.
+     */
+
+    public void printSortedLockers(List<Locker> sortedLockers) {
+
+        printSpaces(" Your lockers have been sorted accordingly ");
+        showList(sortedLockers);
+
     }
 }

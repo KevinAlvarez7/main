@@ -2,8 +2,10 @@ package duke.storage;
 
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import duke.exceptions.DukeException;
 import duke.models.LockerList;
+import duke.models.ModelChecks;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -20,7 +22,6 @@ public class FileHandling {
 
     /**
      * This function handles loading data from the file.
-     *
      * @return a list that stores the tasks loaded from the file.
      * @throws DukeException when there are errors while handling the file.
      */
@@ -30,6 +31,9 @@ public class FileHandling {
             FileInputStream readFile = new FileInputStream(this.file);
             LockerList lockers = getObjectMapper().readValue(readFile, LockerList.class);
             readFile.close();
+            if (!ModelChecks.areAllEntriesValid(lockers)) {
+                throw new DukeException(" Corrupted file. Will continue with an empty list");
+            }
             return lockers;
 
         } catch (FileNotFoundException e) {
@@ -42,7 +46,6 @@ public class FileHandling {
 
     /**
      * This function is responsible for saving data from the list into the file.
-     *
      * @param storeDataInFile list of tasks that are to be stored in the file.
      * @throws DukeException when there are errors while loading data into the file.
      */
@@ -54,13 +57,12 @@ public class FileHandling {
             write.close();
 
         } catch (IOException e) {
-            e.printStackTrace();
             throw new DukeException(" Error occurred while writing data to the file");
         }
     }
 
     private ObjectMapper getObjectMapper() {
-        return new ObjectMapper()
+        return new ObjectMapper().registerModule(new Jdk8Module())
                 .enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL)
                 .disable(MapperFeature.AUTO_DETECT_CREATORS,
                         MapperFeature.AUTO_DETECT_FIELDS,
