@@ -2,12 +2,16 @@ package duke.logic.commands;
 
 import duke.exceptions.DukeException;
 import duke.models.LockerList;
+
 import duke.models.locker.Address;
 import duke.models.locker.Locker;
 import duke.models.locker.SerialNumber;
 import duke.models.locker.Zone;
 import duke.models.tag.Tag;
 import duke.storage.FileHandling;
+
+import duke.storage.Storage;
+
 import duke.ui.Ui;
 
 import java.time.LocalDate;
@@ -25,7 +29,7 @@ public class RemindersCommand extends Command {
     }
 
     @Override
-    public void execute(LockerList lockerList, Ui ui, FileHandling storage) throws DukeException {
+    public void execute(LockerList lockerList, Ui ui, Storage storage) throws DukeException {
 
 
         LocalDate now = LocalDate.now();

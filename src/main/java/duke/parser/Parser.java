@@ -26,6 +26,7 @@ public class Parser {
     private static final String SORT_COMMAND = "sortby";
     private static final String REMINDERS_COMMAND = "reminders";
     private static final String HELP_COMMAND = "help";
+    private static final String STATS_COMMAND = "stats";
     /**
      * this function is used to parse the command entered by the user.
      *
@@ -65,12 +66,17 @@ public class Parser {
             return new HelpCommandParser().parse();
         case EXPORT_LOCKER_COMMAND:
             return new ExportLockerCommandParser().parse();
+
         case FIND_COMMAND:
             return new FindCommandParser().parse(arguments);
         case SORT_COMMAND:
             return new SortCommandParser().parse(arguments);
         case REMINDERS_COMMAND:
             return new RemindersCommandParser().parse();
+
+        case STATS_COMMAND:
+            return new StatsCommandParser().parse();
+
         default:
             throw new DukeException("Invalid Command.");
         }
