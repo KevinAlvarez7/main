@@ -2,13 +2,14 @@ package duke.logic.commands;
 
 import duke.exceptions.DukeException;
 import duke.models.LockerList;
-import duke.storage.FileHandling;
+import duke.storage.Storage;
 import duke.ui.Ui;
 
 public class ByeCommand extends Command {
+    public static final String COMMAND_WORD = "bye";
 
     @Override
-    public void execute(LockerList lockerList, Ui ui, FileHandling storage) throws DukeException {
+    public void execute(LockerList lockerList, Ui ui, Storage storage) {
         this.isExit = true;
         ui.exitDuke();
     }

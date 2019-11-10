@@ -12,7 +12,7 @@ import duke.models.student.Major;
 import duke.models.student.MatricNumber;
 import duke.models.student.Name;
 import duke.models.tag.Tag;
-import duke.storage.FileHandling;
+import duke.storage.Storage;
 import duke.ui.Ui;
 
 public class FindCommand extends Command {
@@ -33,7 +33,7 @@ public class FindCommand extends Command {
     }
 
     @Override
-    public void execute(LockerList lockerList, Ui ui, FileHandling storage) {
+    public void execute(LockerList lockerList, Ui ui, Storage storage) {
 
         List<Locker> containsMatchedLocker = lockerList.getLockerList().stream()
                 .filter(s -> s.compare(this.findLocker, this.findStudent))

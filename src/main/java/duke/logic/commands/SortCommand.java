@@ -3,7 +3,7 @@ package duke.logic.commands;
 import duke.exceptions.DukeException;
 import duke.models.LockerList;
 import duke.models.ObjectComparator;
-import duke.storage.FileHandling;
+import duke.storage.Storage;
 import duke.ui.Ui;
 
 import java.util.Collections;
@@ -26,7 +26,7 @@ public class SortCommand extends Command {
     }
 
     @Override
-    public void execute(LockerList lockerList, Ui ui, FileHandling storage) throws DukeException {
+    public void execute(LockerList lockerList, Ui ui, Storage storage) throws DukeException {
 
         requireNonNull(lockerList);
 

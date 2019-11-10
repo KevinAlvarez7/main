@@ -13,10 +13,16 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 
-public class FileHandling {
+public class FileStorage {
     private String file;
 
-    public FileHandling(String file) {
+    private static final String FILE_NOT_FOUND = " Could not find the file. Invalid file name/file path... "
+            + "Will continue with an empty list";
+    private static final String ERROR_READING_FILE = " Unable to read file. Will start with an empty list";
+    private static final String CORRUPTED_FILE = " Corrupted file. Will continue with an empty list";
+    private static final String ERROR_WRITING_FILE = " Error occurred while writing data to the file";
+
+    public FileStorage(String file) {
         this.file = file;
     }
 
@@ -32,15 +38,14 @@ public class FileHandling {
             LockerList lockers = getObjectMapper().readValue(readFile, LockerList.class);
             readFile.close();
             if (!ModelChecks.areAllEntriesValid(lockers)) {
-                throw new DukeException(" Corrupted file. Will continue with an empty list");
+                throw new DukeException(CORRUPTED_FILE);
             }
             return lockers;
 
         } catch (FileNotFoundException e) {
-            throw new DukeException(" Could not find the file. Invalid file name/file path... "
-                    + "Will continue with an empty list");
+            throw new DukeException(FILE_NOT_FOUND);
         } catch (IOException e) {
-            throw new DukeException(" Unable to read file. Will start with an empty list");
+            throw new DukeException(ERROR_READING_FILE);
         }
     }
 
@@ -57,7 +62,7 @@ public class FileHandling {
             write.close();
 
         } catch (IOException e) {
-            throw new DukeException(" Error occurred while writing data to the file");
+            throw new DukeException(ERROR_WRITING_FILE);
         }
     }
 

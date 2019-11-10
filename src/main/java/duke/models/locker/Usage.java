@@ -52,7 +52,7 @@ public class Usage {
     @Override
     public String toString() {
         return super.toString() + "\n      " + "Name: " + student.getName().getName()
-                + " StudentID:" + student.getMatricNumber().getStudentCourse();
+                + " StudentID:" + student.getMatricNumber().getStudentId();
     }
 
     /* We need to override functions equals() and hashCode() in order to account
@@ -76,7 +76,7 @@ public class Usage {
 
     @Override
     public int hashCode() {
-        return Objects.hash(student,startDate,endDate);
+        return Objects.hash(student, startDate, endDate);
     }
 
 }

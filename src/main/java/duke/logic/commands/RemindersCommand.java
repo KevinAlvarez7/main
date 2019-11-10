@@ -7,25 +7,24 @@ import duke.models.locker.Locker;
 import duke.models.locker.SerialNumber;
 import duke.models.locker.Zone;
 import duke.models.tag.Tag;
-import duke.storage.FileHandling;
+import duke.storage.Storage;
 import duke.ui.Ui;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.ResolverStyle;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static java.time.temporal.ChronoUnit.DAYS;
-
 public class RemindersCommand extends Command {
+
+    public static final String COMMAND_WORD = "reminders";
 
     public RemindersCommand() {
 
     }
 
     @Override
-    public void execute(LockerList lockerList, Ui ui, FileHandling storage) throws DukeException {
+    public void execute(LockerList lockerList, Ui ui, Storage storage) throws DukeException {
 
 
         LocalDate now = LocalDate.now();
