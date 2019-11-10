@@ -19,7 +19,7 @@ public class RemindersCommand extends Command {
     @Override
     public void execute(LockerList lockerList, Ui ui, Storage storage) throws DukeException {
 
-        Tag unauthorized = new Tag("unauthorised");
+        Tag unauthorized = new Tag("unauthorized");
         Tag broken = new Tag("broken");
 
         LocalDate now = LocalDate.now();
