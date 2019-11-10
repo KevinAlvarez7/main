@@ -8,8 +8,8 @@ import duke.models.locker.SerialNumber;
 import duke.models.locker.Zone;
 import duke.models.student.Email;
 import duke.models.student.Major;
-import duke.models.student.MatricNumber;
 import duke.models.student.Name;
+import duke.models.student.StudentId;
 import duke.models.tag.Tag;
 import duke.parser.utilities.MapTokensToArguments;
 import duke.parser.utilities.ParserTokenizer;
@@ -86,10 +86,10 @@ public class FindCommandParser {
         if (checkTokenPresent(mapTokensToArguments,
                 TOKEN_STUDENTID)) {
 
-            MatricNumber matricNumber = ParserCheck.parseMatricNumber(
+            StudentId studentId = ParserCheck.parseMatricNumber(
                     mapTokensToArguments.getValue(TOKEN_STUDENTID).get());
 
-            findStudent.setMatricNumber(matricNumber);
+            findStudent.setMatricNumber(studentId);
 
         }
         if (checkTokenPresent(mapTokensToArguments,

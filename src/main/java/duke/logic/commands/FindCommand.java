@@ -9,7 +9,7 @@ import duke.models.locker.SerialNumber;
 import duke.models.locker.Zone;
 import duke.models.student.Email;
 import duke.models.student.Major;
-import duke.models.student.MatricNumber;
+import duke.models.student.StudentId;
 import duke.models.student.Name;
 import duke.models.tag.Tag;
 import duke.storage.Storage;
@@ -114,7 +114,7 @@ public class FindCommand extends Command {
 
     public static class FindStudent {
         private Name name;
-        private MatricNumber matricNumber;
+        private StudentId studentId;
         private Email email;
         private Major major;
 
@@ -127,7 +127,7 @@ public class FindCommand extends Command {
         public FindStudent(FindStudent findStudent) {
 
             setName(findStudent.name);
-            setMatricNumber(findStudent.matricNumber);
+            setMatricNumber(findStudent.studentId);
             setEmail(findStudent.email);
             setMajor(findStudent.major);
 
@@ -137,8 +137,8 @@ public class FindCommand extends Command {
             this.name = name;
         }
 
-        public void setMatricNumber(MatricNumber matricNumber) {
-            this.matricNumber = matricNumber;
+        public void setMatricNumber(StudentId studentId) {
+            this.studentId = studentId;
         }
 
         public void setEmail(Email email) {
@@ -153,7 +153,7 @@ public class FindCommand extends Command {
          * This function checks that there is at least one field is filled.
          */
         public boolean missingFields() {
-            return (name != null || matricNumber != null
+            return (name != null || studentId != null
                     || email != null || major != null);
 
         }
@@ -162,8 +162,8 @@ public class FindCommand extends Command {
             return name;
         }
 
-        public MatricNumber getMatricNumber() {
-            return matricNumber;
+        public StudentId getStudentID() {
+            return studentId;
         }
 
         public Email getEmail() {

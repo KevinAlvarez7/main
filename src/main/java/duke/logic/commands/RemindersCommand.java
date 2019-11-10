@@ -2,10 +2,7 @@ package duke.logic.commands;
 
 import duke.exceptions.DukeException;
 import duke.models.LockerList;
-import duke.models.locker.Address;
 import duke.models.locker.Locker;
-import duke.models.locker.SerialNumber;
-import duke.models.locker.Zone;
 import duke.models.tag.Tag;
 import duke.storage.Storage;
 import duke.ui.Ui;
@@ -19,39 +16,27 @@ public class RemindersCommand extends Command {
 
     public static final String COMMAND_WORD = "reminders";
 
-    public RemindersCommand() {
-
-    }
-
     @Override
     public void execute(LockerList lockerList, Ui ui, Storage storage) throws DukeException {
 
+        Tag unauthorized = new Tag("unauthorised");
+        Tag broken = new Tag("broken");
 
         LocalDate now = LocalDate.now();
         String dateNow = now.format(DateTimeFormatter.ofPattern("dd-MM-uuuu"));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-uuuu");
         LocalDate localDateNow = LocalDate.parse(dateNow,formatter);
 
-        FindCommand.FindLocker unauthorisedLocker = new FindCommand.FindLocker();
-        FindCommand.FindLocker brokenLocker = new FindCommand.FindLocker();
-        FindCommand.FindStudent findStudent = new FindCommand.FindStudent();
-
-        Tag unauthorized = new Tag("unauthorized");
-        Tag broken = new Tag("broken");
-
-        unauthorisedLocker.setTag(unauthorized);
-        brokenLocker.setTag(broken);
-
         List<Locker> containsExpiringLockers = lockerList.getLockerList().stream()
                 .filter(s -> s.findExpiryDate(localDateNow))
                 .collect(Collectors.toList());
 
         List<Locker> containsUnauthorizedLockers = lockerList.getLockerList().stream()
-                .filter(s -> s.compare(unauthorisedLocker, findStudent))
+                .filter(p -> p.getTag().equals(unauthorized))
                 .collect(Collectors.toList());
 
         List<Locker> containsBrokenLockers = lockerList.getLockerList().stream()
-                .filter(s -> s.compare(brokenLocker, findStudent))
+                .filter(p -> p.getTag().equals(broken))
                 .collect(Collectors.toList());
 
         ui.printReminders(containsExpiringLockers, containsUnauthorizedLockers, containsBrokenLockers);

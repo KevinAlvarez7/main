@@ -224,8 +224,8 @@ public class Locker {
 
             if (findStudent.getName() != null && findStudent.getName().equals(student.getName())) {
                 return true;
-            } else if (findStudent.getMatricNumber() != null && findStudent.getMatricNumber()
-                    .equals(student.getMatricNumber())) {
+            } else if (findStudent.getStudentID() != null && findStudent.getStudentID()
+                    .equals(student.getStudentId())) {
                 return true;
             } else if (findStudent.getEmail() != null && findStudent.getEmail()
                     .equals(student.getEmail())) {
@@ -256,7 +256,7 @@ public class Locker {
             LocalDate expiryDate = LocalDate.parse(endDate,formatter);
             int daysBetween = (int) DAYS.between(now, (Temporal) expiryDate);
 
-            if (daysBetween <= 30) {
+            if (daysBetween <= 7) {
 
                 return true;
 
