@@ -19,6 +19,12 @@ public class FindCommand extends Command {
     private final FindLocker findLocker;
     private final FindStudent findStudent;
 
+    public static final String COMMAND_WORD = "find";
+    public static final String INVALID_FORMAT =  " Invalid command format for find command."
+            + "\n     1. A least one token should be present (s/ a/ z/ c/ n/ i/ e/ m/ f/ t/ p/)"
+            + "\n     2. There should not include any text between the command word and the first token"
+            + "\n     3. Keywords to be searched for should have the exact number of characters.";
+
     /**
      * This constructor instantiates the FindCommand object.
      * @param findLocker stores the attribute of the locker to be found.

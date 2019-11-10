@@ -21,7 +21,7 @@ public class SortCommandParser {
      * @throws DukeException when the command format is invalid
      */
 
-    public Command parse(String userInput) throws DukeException {
+    public SortCommand parse(String userInput) throws DukeException {
 
         String sortByInput;
 
@@ -43,7 +43,7 @@ public class SortCommandParser {
             sortByInput = mapTokensToArguments.getValue(TOKEN_DESCENDING).get();
 
         } else {
-            throw new DukeException(" Invalid command format");
+            throw new DukeException(SortCommand.INVALID_FORMAT);
         }
 
         if (sortByInput.equalsIgnoreCase("serialNumber")) {

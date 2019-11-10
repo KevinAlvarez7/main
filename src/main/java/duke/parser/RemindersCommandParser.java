@@ -10,10 +10,11 @@ public class RemindersCommandParser {
      * @return reference to the class RemindersCommand.
      */
 
-    public Command parse() {
+    public RemindersCommand parse() {
 
         return new RemindersCommand();
 
     }
+
 
 }

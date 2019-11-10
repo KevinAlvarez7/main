@@ -14,6 +14,11 @@ public class SortCommand extends Command {
     private final String sortBy;
     private final int checkAscOrDes;
 
+    public static final String COMMAND_WORD = "sortby";
+    public static final String INVALID_FORMAT =  " Invalid command format for sort command."
+            + "\n     1. Only one of the token should be present (asc/ or dsc/)"
+            + "\n     2. Keywords to use are, 'serialnumber', 'address', 'zone', 'tags'. ";
+
     /**
      * This constructor instantiates the SortCommand object.
      * @param sortBy stores the attribute of the locker to be sorted by.
@@ -45,7 +50,6 @@ public class SortCommand extends Command {
                 Collections.sort(lockerList.getLockerList(), ObjectComparator.TagComparatorAsc);
                 ui.printSortedLockers(lockerList.getLockerList());
             }
-
         }
 
         if (checkAscOrDes == 0) {

@@ -34,7 +34,7 @@ public class FindCommandParser {
      * @throws DukeException when the command format is invalid
      */
 
-    public Command parse(String userInput) throws DukeException {
+    public FindCommand parse(String userInput) throws DukeException {
 
         MapTokensToArguments mapTokensToArguments =
                 ParserTokenizer.tokenize(userInput, TOKEN_SERIAL, TOKEN_ADDRESS, TOKEN_ZONE, TOKEN_CONDITION,
@@ -112,7 +112,7 @@ public class FindCommandParser {
         }
 
         if (!findLocker.missingFields() && !findStudent.missingFields()) {
-            throw new DukeException(" Invalid command format");
+            throw new DukeException(FindCommand.INVALID_FORMAT);
         }
 
         return new FindCommand(findLocker, findStudent);

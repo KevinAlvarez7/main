@@ -71,8 +71,8 @@ public class ObjectComparator {
         @Override
         public int compare(Locker t1, Locker t2) {
 
-            String tag1 = t1.getZone().getZone();
-            String tag2 = t2.getZone().getZone();
+            String tag1 = t1.getTag().getTagName();
+            String tag2 = t2.getTag().getTagName();
 
             //ascending order
             return tag1.compareTo(tag2);
@@ -126,8 +126,8 @@ public class ObjectComparator {
         @Override
         public int compare(Locker t1, Locker t2) {
 
-            String tag1 = t1.getZone().getZone();
-            String tag2 = t2.getZone().getZone();
+            String tag1 = t1.getTag().getTagName();
+            String tag2 = t2.getTag().getTagName();
 
             //descending order
             return tag2.compareTo(tag1);
