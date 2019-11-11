@@ -32,11 +32,17 @@ public class ObjectComparator {
 
             String serialNumber1 = sn1.getSerialNumber().getSerialNumberForLocker();
             String serialNumber2 = sn2.getSerialNumber().getSerialNumberForLocker();
+
             int number1 = Integer.parseInt(serialNumber1);
             int number2 = Integer.parseInt(serialNumber2);
 
             //ascending order
             return Integer.compare(number1, number2);
+
+
+            //ascending order
+            return serialNumber1.compareTo(serialNumber2);
+
 
         }
     };
@@ -89,11 +95,16 @@ public class ObjectComparator {
 
             String serialNumber1 = sn1.getSerialNumber().getSerialNumberForLocker();
             String serialNumber2 = sn2.getSerialNumber().getSerialNumberForLocker();
+
             int number1 = Integer.parseInt(serialNumber1);
             int number2 = Integer.parseInt(serialNumber2);
 
             //descending order
             return Integer.compare(number2, number1);
+
+
+            //descending order
+            return serialNumber2.compareTo(serialNumber1);
 
         }
     };
