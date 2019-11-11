@@ -11,6 +11,8 @@ import duke.logic.commands.EditLockerCommand;
 import duke.logic.commands.EditUsageCommand;
 import duke.logic.commands.RemindersCommand;
 import duke.logic.commands.SortCommand;
+import duke.logic.commands.ExportLockerCommand;
+import duke.logic.commands.ExportLockerSelectCommand;
 import duke.logic.commands.HelpCommand;
 import duke.logic.commands.ListCommand;
 import duke.logic.commands.ExportLockerCommand;
@@ -35,7 +37,6 @@ public class Parser {
     private static final String ARGUMENTS = "arguments";
     private static final String INVALID_FORMAT = " The command entered has invalid format. "
             + "Type help to check all the commands available in SpongeBob";
-
     private static final String STATS_COMMAND = "stats";
 
     /**
@@ -76,6 +77,9 @@ public class Parser {
             return new ByeCommand();
         case ExportLockerCommand.COMMAND_WORD:
             return new ExportLockerCommand();
+        case ExportLockerSelectCommand.COMMAND_WORD:
+            return new ExportLockerSelectCommandParser().parse(arguments);
+
         case STATS_COMMAND:
             return new StatsCommandParser().parse();
         case RemindersCommand.COMMAND_WORD:
